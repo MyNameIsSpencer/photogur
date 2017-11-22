@@ -17,7 +17,7 @@ class PicturesController < ApplicationController
     @picture.title = params[:picture][:title]
     @picture.artist = params[:picture][:artist]
     @picture.url = params[:picture][:url]
-    
+
     if @picture.save
       # if the picture gets saved, generate a get request to "/pictures" (the index)
       redirect_to "/pictures"
@@ -26,6 +26,27 @@ class PicturesController < ApplicationController
       render :new
     end
 
+  end
+
+
+  def edit
+    @picture = Picture.find(params[:id])
+  end
+
+  def update
+    @picture = Picture.find(params[:id])
+
+    @picture.title = params[:picture][:title]
+    @picture.artist = params[:picture][:artist]
+    @picture.url = params[:picture][:url]
+
+    if @picture.save
+      # if the picture gets saved, generate a get request to "/pictures" (the index)
+      redirect_to "/pictures/#{@picture.id}"
+    else
+      # otherwise render new.html.erb
+      render :edit
+    end
   end
 
 end
